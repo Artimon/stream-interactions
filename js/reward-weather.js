@@ -16,7 +16,7 @@ class RewardWeather {
 		this._audioRainModerate.volume = 0;
 
 		this._$audioRainModerate = $(this._audioRainModerate);
-		this._$audioRainHeavy = $(this._audioRainModerate);
+		this._$audioRainHeavy = $(this._audioRainHeavy);
 
 		this._handles = {};
 
@@ -72,7 +72,7 @@ class RewardWeather {
 		this._animateWeather();
 
 		this._audioRainModerate.play();
-		this._$audioRainModerate.animate({ volume: 0.035 }, 1000);
+		this._$audioRainModerate.animate({ volume: 0.02 }, 1000);
 		this._$component.removeClass('storm').addClass('rain');
 	};
 
@@ -83,7 +83,7 @@ class RewardWeather {
 		this._animateWeather();
 
 		this._audioRainHeavy.play();
-		this._$audioRainHeavy.animate({ volume: 0.035 }, 1000);
+		this._$audioRainHeavy.animate({ volume: 0.02 }, 1000);
 		this._$component.removeClass('rain').addClass('storm');
 
 		this._handles.windSpeedChange = window.setTimeout(() => {
@@ -223,6 +223,8 @@ class RewardWeather {
 		var hasActiveLightning = this._$component.hasClass('lightning'),
 			delay;
 
+		this._playThunder();
+
 		if (hasActiveLightning) {
 			this._$component.removeClass('lightning');
 
@@ -230,7 +232,7 @@ class RewardWeather {
 				delay = this._minRangRandom(75, 35);
 			}
 			else {
-				delay = this._minRangRandom(5000, 5000);
+				delay = this._minRangRandom(10000, 20000);
 			}
 		}
 		else {
@@ -243,4 +245,28 @@ class RewardWeather {
 			this._lightning();
 		}, delay);
 	};
+
+	_playThunder() {
+		let delay = this._minRangRandom(0, 3000);
+
+		if (this._handles.thunderSound) {
+			return;
+		}
+
+		this._handles.thunderSound = window.setTimeout(() => {
+			let audioThunder,
+				audioPath = Random.fromArray([
+					'snd/thunder-1.wav',
+					'snd/thunder-2.wav',
+					'snd/thunder-3.wav'
+				]);
+
+			audioThunder = new Audio(audioPath);
+			audioThunder.volume = 0.04;
+			audioThunder.play();
+
+			this._handles.thunderSound = null;
+		}, delay);
+
+	}
 }

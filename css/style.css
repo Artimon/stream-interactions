@@ -8828,21 +8828,21 @@ body.show-halloween-bats .halloween-bat {
   .component-weather.show {
     opacity: 1; }
   .component-weather.rain {
-    background-color: rgba(25, 45, 53, 0.4); }
+    background-color: rgba(25, 45, 53, 0.25); }
   .component-weather.storm {
-    background-color: rgba(23, 47, 56, 0.8); }
+    background-color: rgba(23, 47, 56, 0.5); }
   .component-weather.lightning {
-    background-color: transparent; }
+    background-color: rgba(255, 255, 255, 0.85); }
   .component-weather.rain-fast .weather-rain-drop {
-    width: 14px;
-    height: 14px;
+    width: 21px;
+    height: 21px;
     background-image: url(data:image/gif;base64,R0lGODlhBwAHALMAAP//////AP8A//8AAAD//wD/AAAA/wAAABBgaEBsaHB4aP///wAAAAAAAAAAAAAAACH5BAEAAAsALAAAAAAHAAcAAAQNEK1Jl6wz4byX3kqnRAA7);
-    background-size: 14px 14px; }
+    background-size: 21px 21px; }
   .component-weather.rain-slow .weather-rain-drop {
-    width: 4px;
-    height: 16px;
+    width: 6px;
+    height: 24px;
     background-image: url(data:image/gif;base64,R0lGODlhAgAIALMAAP//////AP8A//8AAAD//wD/AAAA/wAAABBgaEBsaHB4aP///wAAAAAAAAAAAAAAACH5BAEAAAsALAAAAAACAAgAAAQJEC2ZVrVYLRUBADs=);
-    background-size: 4px 16px; }
+    background-size: 6px 24px; }
   .component-weather .weather-rain-drop {
     position: absolute; }
 
