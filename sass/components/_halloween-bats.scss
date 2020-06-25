@@ -1,0 +1,9 @@
+
+.halloween-bat {
+	display: none;
+	image-rendering: pixelated;
+}
+
+body.show-halloween-bats .halloween-bat {
+	display: block;
+}

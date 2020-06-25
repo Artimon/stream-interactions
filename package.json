@@ -1,0 +1,9 @@
+{
+  "name": "stream-interactions-build",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-sass": "^4.1.0"
+  }
+}

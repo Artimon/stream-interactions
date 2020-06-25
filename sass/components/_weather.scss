@@ -1,0 +1,46 @@
+.component-weather {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+	overflow: hidden;
+
+	opacity: 0;
+	transition: opacity 650ms;
+
+	&.show {
+		opacity: 1;
+	}
+
+	&.rain {
+		background-color: rgba(25, 45, 53, 0.4);
+	}
+
+	&.storm {
+		background-color: rgba(23, 47, 56, 0.8);
+	}
+
+	&.lightning {
+		background-color: transparent;
+	}
+
+	&.rain-fast .weather-rain-drop {
+		width: 14px;
+		height: 14px;
+		background-image: url(data:image/gif;base64,R0lGODlhBwAHALMAAP//////AP8A//8AAAD//wD/AAAA/wAAABBgaEBsaHB4aP///wAAAAAAAAAAAAAAACH5BAEAAAsALAAAAAAHAAcAAAQNEK1Jl6wz4byX3kqnRAA7);
+		background-size: 14px 14px;
+	}
+
+	&.rain-slow .weather-rain-drop {
+		width: 4px;
+		height: 16px;
+		background-image: url(data:image/gif;base64,R0lGODlhAgAIALMAAP//////AP8A//8AAAD//wD/AAAA/wAAABBgaEBsaHB4aP///wAAAAAAAAAAAAAAACH5BAEAAAsALAAAAAACAAgAAAQJEC2ZVrVYLRUBADs=);
+		background-size: 4px 16px;
+	}
+
+	.weather-rain-drop {
+		position: absolute;
+	}
+}

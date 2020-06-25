@@ -1,0 +1,27 @@
+html, body {
+	width: 100%;
+	height: 100%;
+
+	padding: 0;
+	margin: 0;
+}
+
+@import "../css/bootstrap.min";
+@import "../css/snowfall";
+
+$fontFamilyBold: 'Wendy One', sans-serif;
+
+@import "mixins/text-outline";
+
+@import "components/halloween-bats";
+@import "components/hamster-train";
+@import "components/weather";
+
+
+snowfall {
+	display: none;
+}
+
+body.show-snowfall snowfall {
+	display: block;
+}

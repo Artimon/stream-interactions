@@ -1,0 +1,168 @@
+.component-hamster-train {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+	img {
+		image-rendering: pixelated;
+	}
+
+	.hamster-track {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		left: 0;
+
+		height: 12px;
+
+		background-repeat: repeat;
+		background-size: 54px 12px;
+
+		opacity: 0;
+
+		transition: opacity 350ms;
+		image-rendering: pixelated;
+
+		&.show {
+			opacity: 1;
+		}
+	}
+
+	.hamster-train {
+		position: absolute;
+		left: 20%;
+		bottom: 10px;
+
+		display: flex;
+	}
+
+	.hamster-train-waggon {
+		position: relative;
+		margin-left: -14px;
+
+		display: flex;
+
+		.waggon-passenger {
+			bottom: 82px;
+			left: 54px;
+		}
+
+		&:nth-child(odd) .passenger-name {
+			top: -50px;
+		}
+	}
+
+	.hamster-train-locomotive {
+		position: relative;
+		margin-left: -14px;
+
+		.wheel-image {
+			width: 518px;
+		}
+
+		.waggon-passenger {
+			bottom: 94px;
+			left: 296px;
+		}
+	}
+
+	.locomotive-image {
+		width: 594px;
+
+		margin-bottom: 4px;
+		margin-left: 2px;
+	}
+
+	.waggon-image {
+		display: none;
+		width: 248px;
+
+		margin-top: auto;
+		margin-bottom: 16px;
+
+		&.show {
+			display: block;
+		}
+	}
+
+	.waggon-wheel {
+		position: absolute;
+		bottom: 0;
+
+		&.alternate .wheel-image {
+			&:last-child {
+				display: none;
+			}
+		}
+
+		&:not(.alternate) .wheel-image {
+			&:first-child {
+				display: none;
+			}
+		}
+	}
+
+	.wheel-front {
+		left: 42px;
+	}
+
+	.wheel-back {
+		right: 74px;
+	}
+
+	.wheel-image {
+		width: 34px;
+	}
+
+	.waggon-passenger {
+		position: absolute;
+	}
+
+	.passenger-image {
+		display: none;
+		width: 112px;
+
+		&.show {
+			display: block;
+		}
+	}
+
+	.passenger-name {
+		position: absolute;
+		top: -25px;
+		left: 50%;
+
+		font-family: $fontFamilyBold;
+		font-size: 30px;
+
+		@include text-outline(2px);
+
+		transform: translateX(-50%);
+	}
+
+	.hamster-train-smoke {
+		position: fixed;
+
+		margin-left: -240px;
+		margin-top: -135px;
+
+		animation: animate-smoke 3s ease-out;
+	}
+
+	.smoke-image {
+		display: none;
+
+		&.show {
+			display: block;
+		}
+	}
+}
+
+
+@keyframes animate-smoke {
+	0% {}
+	100% {
+		transform: translateY(-100%);
+	}
+}
