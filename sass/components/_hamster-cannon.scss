@@ -1,0 +1,104 @@
+.component-hamster-cannon {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+	&.show-cannon .cannon-image {
+		opacity: 1;
+		animation: animate-hamster-cannon 5s forwards;
+	}
+
+	.cannon-image {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+
+		opacity: 0;
+		width: 170px;
+
+		image-rendering: pixelated;
+		transition: transform 1s;
+
+		&.show {
+			transform: translateY(-100%);
+		}
+	}
+
+	.cannon-ball {
+		position: absolute;
+		right: 100px;
+		bottom: 100px;
+
+		transform: rotate(-45deg) translate(0%, 100%);
+		transition:
+			opacity 350ms,
+			transform 1500ms;
+
+		&.load {
+			transform: rotate(-45deg);
+		}
+
+		&.fired {
+			transition: none;
+		}
+
+		&.hide {
+			opacity: 0;
+		}
+	}
+
+	.hamster-image {
+		display: none;
+
+		&.show {
+			display: block;
+		}
+	}
+
+	.chatter-name {
+		position: absolute;
+		top: -25px;
+		left: 50%;
+
+		font-family: $fontFamilyBold;
+		font-size: 30px;
+
+		@include text-outline(2px);
+
+		transform: translateX(-50%);
+	}
+
+	.cannon-smoke {
+		position: absolute;
+		right: -45px;
+		bottom: 70px;
+
+		transform: rotate(-45deg);
+	}
+
+	.smoke-image {
+		display: none;
+		width: 600px;
+
+		&.show {
+			display: block;
+		}
+	}
+}
+
+@keyframes animate-hamster-cannon {
+	0% {
+		transform: translateY(100%);
+	}
+	20% {
+		transform: translateY(0);
+	}
+	80% {
+		transform: translateY(0);
+	}
+	100% {
+		transform: translateY(100%);
+	}
+}

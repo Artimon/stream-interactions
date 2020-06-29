@@ -40,16 +40,10 @@ let RewardHamsterTrain = (function ($) {
 		 */
 		_createWaggons(userContext) {
 			let activeChatters = ActiveChatters.get(),
-				excludeNames = ['nightbot', 'pretzelrocks', 'jostmkbot', 'sparkofsharkbot', 'sparkofsharkclone'],
-
 				chatters = activeChatters.getChatters();
 
 			$.each(chatters, (index, chatter) => {
 				if (userContext.userId === chatter.userContext.userId) {
-					return;
-				}
-
-				if (excludeNames.includes(chatter.userContext.displayName.toLowerCase())) {
 					return;
 				}
 

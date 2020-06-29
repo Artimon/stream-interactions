@@ -8720,6 +8720,70 @@ snowfall snowflake:nth-child(1) {
 body.show-halloween-bats .halloween-bat {
   display: block; }
 
+.component-hamster-cannon {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0; }
+  .component-hamster-cannon.show-cannon .cannon-image {
+    opacity: 1;
+    animation: animate-hamster-cannon 5s forwards; }
+  .component-hamster-cannon .cannon-image {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    width: 170px;
+    image-rendering: pixelated;
+    transition: transform 1s; }
+    .component-hamster-cannon .cannon-image.show {
+      transform: translateY(-100%); }
+  .component-hamster-cannon .cannon-ball {
+    position: absolute;
+    right: 100px;
+    bottom: 100px;
+    transform: rotate(-45deg) translate(0%, 100%);
+    transition: opacity 350ms, transform 1500ms; }
+    .component-hamster-cannon .cannon-ball.load {
+      transform: rotate(-45deg); }
+    .component-hamster-cannon .cannon-ball.fired {
+      transition: none; }
+    .component-hamster-cannon .cannon-ball.hide {
+      opacity: 0; }
+  .component-hamster-cannon .hamster-image {
+    display: none; }
+    .component-hamster-cannon .hamster-image.show {
+      display: block; }
+  .component-hamster-cannon .chatter-name {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    font-family: "Wendy One", sans-serif;
+    font-size: 30px;
+    text-shadow: 0 -2px 0 #000, 2px -2px 0 #000, 2px 0 0 #000, 2px 2px 0 #000, 0 2px 0 #000, -2px 2px 0 #000, -2px 0 0 #000, -2px -2px 0 #000;
+    transform: translateX(-50%); }
+  .component-hamster-cannon .cannon-smoke {
+    position: absolute;
+    right: -45px;
+    bottom: 70px;
+    transform: rotate(-45deg); }
+  .component-hamster-cannon .smoke-image {
+    display: none;
+    width: 600px; }
+    .component-hamster-cannon .smoke-image.show {
+      display: block; }
+
+@keyframes animate-hamster-cannon {
+  0% {
+    transform: translateY(100%); }
+  20% {
+    transform: translateY(0); }
+  80% {
+    transform: translateY(0); }
+  100% {
+    transform: translateY(100%); } }
+
 .component-hamster-train {
   position: fixed;
   right: 0;

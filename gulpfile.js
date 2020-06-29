@@ -16,3 +16,10 @@ gulp.task('sass:watch', function () {
 
 	gulp.watch('sass/**/*.scss', cwd, gulp.series('sass'));
 });
+
+gulp.task('deploy', function () {
+	let files = ['**/*.*', '!node_modules/', '!.git'];
+
+	return gulp.src(files)
+		.pipe(gulp.dest('../../../dist/config/stream-interaction'));
+});
