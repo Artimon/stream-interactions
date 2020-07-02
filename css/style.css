@@ -8726,19 +8726,19 @@ body.show-halloween-bats .halloween-bat {
   right: 0;
   bottom: 0;
   left: 0; }
-  .component-hamster-cannon.show-cannon .cannon-image {
-    opacity: 1;
-    animation: animate-hamster-cannon 5s forwards; }
+  .component-hamster-cannon .cannon-ball-container {
+    width: 100%;
+    height: 100%; }
+  .component-hamster-cannon .cannon-container.show .cannon-image {
+    transform: translateY(0); }
   .component-hamster-cannon .cannon-image {
     position: absolute;
     right: 0;
     bottom: 0;
-    opacity: 0;
     width: 170px;
-    image-rendering: pixelated;
-    transition: transform 1s; }
-    .component-hamster-cannon .cannon-image.show {
-      transform: translateY(-100%); }
+    transform: translateY(100%);
+    transition: transform 1s;
+    image-rendering: pixelated; }
   .component-hamster-cannon .cannon-ball {
     position: absolute;
     right: 100px;
@@ -8746,9 +8746,9 @@ body.show-halloween-bats .halloween-bat {
     transform: rotate(-45deg) translate(0%, 100%);
     transition: opacity 350ms, transform 1500ms; }
     .component-hamster-cannon .cannon-ball.load {
-      transform: rotate(-45deg); }
+      transform: rotate(-45deg) translate(0, 0); }
     .component-hamster-cannon .cannon-ball.fired {
-      transition: none; }
+      transition: opacity 350ms; }
     .component-hamster-cannon .cannon-ball.hide {
       opacity: 0; }
   .component-hamster-cannon .hamster-image {
@@ -8773,16 +8773,6 @@ body.show-halloween-bats .halloween-bat {
     width: 600px; }
     .component-hamster-cannon .smoke-image.show {
       display: block; }
-
-@keyframes animate-hamster-cannon {
-  0% {
-    transform: translateY(100%); }
-  20% {
-    transform: translateY(0); }
-  80% {
-    transform: translateY(0); }
-  100% {
-    transform: translateY(100%); } }
 
 .component-hamster-train {
   position: fixed;
@@ -8892,9 +8882,9 @@ body.show-halloween-bats .halloween-bat {
   .component-weather.show {
     opacity: 1; }
   .component-weather.rain {
-    background-color: rgba(25, 45, 53, 0.25); }
+    background-color: rgba(25, 45, 53, 0.15); }
   .component-weather.storm {
-    background-color: rgba(23, 47, 56, 0.5); }
+    background-color: rgba(23, 47, 56, 0.25); }
   .component-weather.lightning {
     background-color: rgba(255, 255, 255, 0.85); }
   .component-weather.rain-fast .weather-rain-drop {

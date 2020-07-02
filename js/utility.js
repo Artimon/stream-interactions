@@ -132,7 +132,6 @@ class ActiveChatters {
 		$.each(this._chatters, (index, chatter) => {
 			if (chatter.timestamp < timestamp - active) {
 				delete this._chatters[index];
-
 			}
 		});
 
@@ -236,4 +235,17 @@ class AnimationEngine {
 	register(name, callback) {
 		this._callbacks[name] = callback;
 	}
+}
+
+/**
+ * @param {*} item
+ */
+Array.prototype.removeItem = function (item) {
+	let index = this.indexOf(item);
+
+	if (index === -1) {
+		return;
+	}
+
+	this.splice(index, 1);
 }

@@ -5,9 +5,16 @@
 	bottom: 0;
 	left: 0;
 
-	&.show-cannon .cannon-image {
-		opacity: 1;
-		animation: animate-hamster-cannon 5s forwards;
+	.cannon-ball-container {
+		width: 100%;
+		height: 100%;
+	}
+
+	.cannon-container {
+
+		&.show .cannon-image {
+			transform: translateY(0);
+		}
 	}
 
 	.cannon-image {
@@ -15,15 +22,12 @@
 		right: 0;
 		bottom: 0;
 
-		opacity: 0;
 		width: 170px;
 
-		image-rendering: pixelated;
+		transform: translateY(100%);
 		transition: transform 1s;
 
-		&.show {
-			transform: translateY(-100%);
-		}
+		image-rendering: pixelated;
 	}
 
 	.cannon-ball {
@@ -37,11 +41,11 @@
 			transform 1500ms;
 
 		&.load {
-			transform: rotate(-45deg);
+			transform: rotate(-45deg) translate(0, 0);
 		}
 
 		&.fired {
-			transition: none;
+			transition: opacity 350ms;
 		}
 
 		&.hide {
@@ -85,20 +89,5 @@
 		&.show {
 			display: block;
 		}
-	}
-}
-
-@keyframes animate-hamster-cannon {
-	0% {
-		transform: translateY(100%);
-	}
-	20% {
-		transform: translateY(0);
-	}
-	80% {
-		transform: translateY(0);
-	}
-	100% {
-		transform: translateY(100%);
 	}
 }
