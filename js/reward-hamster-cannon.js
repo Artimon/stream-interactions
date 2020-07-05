@@ -38,7 +38,8 @@ let RewardHamsterCannon = (function ($) {
 			this.rotation = -45;
 			this.rotationSpeed = Random.clasp(20);
 			this.size = 112;
-			this.groundBounces = 0;
+			this.radius = this.size / 2;
+			this.mass = 1 + Math.random();
 			
 			this._start();
 		}
@@ -64,6 +65,34 @@ let RewardHamsterCannon = (function ($) {
 				this._$html.remove();
 				this.removed = true;
 			}, 500);
+		}
+
+		isActive() {
+			let inactive = (
+				this.removed ||
+				!this.fired
+			)
+
+			return !inactive;
+		}
+
+		getSpeed() {
+			return Math.sqrt(this.speed.x * this.speed.x + this.speed.y * this.speed.y);
+		}
+
+		getAngle() {
+			return Math.atan2(this.speed.y, this.speed.x);
+		}
+
+		/**
+		 * @param {CannonBall} cannonBall
+		 * @returns {number}
+		 */
+		getDistance(cannonBall) {
+			return Math.sqrt(
+				(this.right - cannonBall.right) ** 2 +
+				(this.bottom - cannonBall.bottom) ** 2
+			);
 		}
 
 		/**
@@ -136,9 +165,7 @@ let RewardHamsterCannon = (function ($) {
 				this.speed.y *= invertedDamping;
 				bounced = true;
 
-				this.groundBounces += 1;
-
-				if (this.groundBounces >= 7) {
+				if (this.speed.y < 150) {
 					this._remove();
 				}
 			}
@@ -151,12 +178,23 @@ let RewardHamsterCannon = (function ($) {
 			if (bounced) {
 				this.speed.x += Random.clasp(this.speed.x * 0.2);
 				this.speed.y += Random.clasp(this.speed.y * 0.2);
-				this.rotationSpeed = (Math.random() * Math.random()) * Random.clasp(1000);
+
+				this._changeRotation();
 
 				audio = new Audio('snd/cartoon-boing.wav');
 				audio.volume = 0.20;
 				audio.play();
 			}
+		}
+
+		_changeRotation() {
+			if (Math.random() < .66) {
+				this.rotationSpeed += Random.clasp(500);
+
+				return;
+			}
+
+			this.rotationSpeed = (Math.random() * Math.random()) * Random.clasp(1000);
 		}
 	}
 
@@ -188,11 +226,51 @@ let RewardHamsterCannon = (function ($) {
 						cannonBall.move(deltaTime);
 					}
 				});
+
+				this._ballCollision();
 			});
 
 			this.coolDown = new CoolDown(15, () => {
 				this._cannonActivate();
 			});
+		}
+
+		_ballCollision() {
+			for (let i = 0; i < this._cannonBalls.length - 1; i++) {
+				for (let j = i + 1; j < this._cannonBalls.length; j++) {
+					let cannonBall1 = this._cannonBalls[i];
+					let cannonBall2 = this._cannonBalls[j];
+
+					if (
+						!cannonBall1.isActive() ||
+						!cannonBall2.isActive()
+					) {
+						continue;
+					}
+
+					let dist = cannonBall1.getDistance(cannonBall2);
+
+					if (dist < cannonBall1.radius + cannonBall2.radius) {
+						let theta1 = cannonBall1.getAngle();
+						let theta2 = cannonBall2.getAngle();
+						let phi = Math.atan2(cannonBall2.bottom - cannonBall1.bottom, cannonBall2.right - cannonBall1.right);
+						let m1 = cannonBall1.mass;
+						let m2 = cannonBall2.mass;
+						let v1 = cannonBall1.getSpeed();
+						let v2 = cannonBall2.getSpeed();
+
+						let dx1F = (v1 * Math.cos(theta1 - phi) * (m1 - m2) + 2 * m2 * v2 * Math.cos(theta2 - phi)) / (m1 + m2) * Math.cos(phi) + v1 * Math.sin(theta1 - phi) * Math.cos(phi + Math.PI / 2);
+						let dy1F = (v1 * Math.cos(theta1 - phi) * (m1 - m2) + 2 * m2 * v2 * Math.cos(theta2 - phi)) / (m1 + m2) * Math.sin(phi) + v1 * Math.sin(theta1 - phi) * Math.sin(phi + Math.PI / 2);
+						let dx2F = (v2 * Math.cos(theta2 - phi) * (m2 - m1) + 2 * m1 * v1 * Math.cos(theta1 - phi)) / (m1 + m2) * Math.cos(phi) + v2 * Math.sin(theta2 - phi) * Math.cos(phi + Math.PI / 2);
+						let dy2F = (v2 * Math.cos(theta2 - phi) * (m2 - m1) + 2 * m1 * v1 * Math.cos(theta1 - phi)) / (m1 + m2) * Math.sin(phi) + v2 * Math.sin(theta2 - phi) * Math.sin(phi + Math.PI / 2);
+
+						cannonBall1.speed.x = dx1F;
+						cannonBall1.speed.y = dy1F;
+						cannonBall2.speed.x = dx2F;
+						cannonBall2.speed.y = dy2F;
+					}
+				}
+			}
 		}
 
 		_cannonActivate() {
