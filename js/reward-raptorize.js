@@ -1,21 +1,12 @@
-let RewardRaptorize = (function ($) {
+class RewardRaptorize {
+    constructor() {
+        var raptor = new Raptor();
+        this.coolDown = new CoolDown(10, () => {
+            raptor.trigger();
+        });
+    }
 
-	'use strict';
-
-	class RewardRaptorize {
-		constructor() {
-			this.$body = $('body');
-			this.$body.raptorize();
-			this.coolDown = new CoolDown(10, () => {
-				this.$body.click();
-			});
-		}
-
-		activate() {
-			this.coolDown.trigger();
-		}
-	}
-
-	return RewardRaptorize;
-
-})(jQuery);
+    activate() {
+        this.coolDown.trigger();
+    }
+}
