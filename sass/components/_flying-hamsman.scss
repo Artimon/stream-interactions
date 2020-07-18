@@ -1,0 +1,160 @@
+.component-flying-hamsman {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+	image-rendering: pixelated;
+
+	.flying-hamsman {
+		position: absolute;
+		top: 30%;
+		left: 40%;
+
+		opacity: 0;
+
+		&.animate {
+			opacity: 1;
+			transition: left 30s linear;
+		}
+	}
+
+	.flying-hamsman-container {
+		animation: animate-flying-hamsman 13s infinite ease-in-out;
+	}
+
+	.flying-hamsman-image {
+		width: 692px;
+	}
+
+	.magic-cloud-image {
+		position: absolute;
+		width: 300px;
+
+		animation-name: animate-magic-cloud;
+		animation-fill-mode: forwards;
+		animation-iteration-count: infinite;
+	}
+
+	.cloud-1 {
+		top: 380px;
+		left: 0;
+
+		animation-duration: 18s;
+		animation-delay: -2s;
+	}
+
+	.cloud-2 {
+		top: 420px;
+		left: 160px;
+		z-index: 1;
+
+		animation-duration: 15s;
+		animation-delay: -4s;
+	}
+
+	.cloud-3 {
+		top: 330px;
+		left: 260px;
+
+		animation-duration: 12s;
+		animation-delay: -1s;
+	}
+
+	.component-hamster {
+		&.hamster-captain {
+			top: 148px;
+			left: 37px;
+		}
+
+		&.hamster-crew {
+			top: 212px;
+			left: 270px;
+		}
+
+		.hamster-image {
+			position: relative;
+			z-index: -1;
+		}
+	}
+
+	.gun-port {
+		position: absolute;
+		top: 338px;
+
+		&.port-1 {
+			left: 140px;
+		}
+
+		&.port-2 {
+			left: 220px;
+		}
+
+		&.port-3 {
+			left: 300px;
+		}
+	}
+
+	.gun-port-image {
+		width: 50px;
+	}
+
+	.cannon-fire {
+		position: fixed;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+	}
+
+	.component-effect-animation {
+		position: absolute;
+		width: 320px;
+
+		transform: translate(-50%, -50%);
+	}
+
+	.cannon-ball {
+		position: absolute;
+		z-index: 10;
+		image-rendering: auto;
+	}
+
+	.hamster-cannon-ball {
+		transform: translate(-50%, -50%);
+	}
+}
+
+@keyframes animate-flying-hamsman {
+	0% {
+		transform: rotate(-2deg);
+	}
+	50% {
+		transform: rotate(2deg);
+	}
+	100% {
+		transform: rotate(-2deg);
+	}
+}
+
+@keyframes animate-magic-cloud {
+	0% {
+		transform: translate(-20px, -10px);
+	}
+	20% {
+		transform: translate(0px, 10px);
+	}
+	40% {
+		transform: translate(10px, -5px);
+	}
+	60% {
+		transform: translate(-5px, 15px);
+	}
+	80% {
+		transform: translate(-15px, 5px);
+	}
+	100% {
+		transform: translate(-20px, -10px);
+	}
+}

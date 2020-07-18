@@ -85,6 +85,6 @@ $(function () {
 	//processor.registerReward('06aa7f74-82d6-40b8-8b8a-888b22daf781', new RewardSnowfall());
 	processor.registerReward('f73d1843-ebc7-4ad0-ace2-c3b3c487b6fa', new RewardHamsterTrain());
 	processor.registerReward('c547b2ec-062f-41e0-a3fa-c0c96ba6b69b', new RewardHamsterCannon());
+	processor.registerReward('3fe81181-35b1-4c55-9ee1-0b96755069fb', new RewardFlyingHamsman());
 
-	new RewardHamsterTrain();
 });

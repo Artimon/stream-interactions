@@ -1,0 +1,10 @@
+.component-effect-animation {
+	.animation-image {
+		display: none;
+		width: inherit;
+
+		&.show {
+			display: block;
+		}
+	}
+}

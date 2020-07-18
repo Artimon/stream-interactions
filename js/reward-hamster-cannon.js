@@ -189,7 +189,7 @@ let RewardHamsterCannon = (function ($) {
 
 		_changeRotation() {
 			if (Math.random() < .66) {
-				this.rotationSpeed += Random.clasp(500);
+				this.rotationSpeed += Random.clasp(250);
 
 				return;
 			}
@@ -386,12 +386,10 @@ let RewardHamsterCannon = (function ($) {
 		 * @param {userContext} userContext
 		 */
 		activate(userContext) {
-			this.coolDown.trigger();
+			this.coolDown.trigger(userContext);
 		}
 	}
 
 	return RewardHamsterCannon;
 
 })(jQuery);
-
-new RewardHamsterCannon();

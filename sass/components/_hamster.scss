@@ -1,0 +1,25 @@
+.component-hamster {
+	position: absolute;
+
+	.hamster-image {
+		display: none;
+		width: 112px;
+
+		&.show {
+			display: block;
+		}
+	}
+
+	.hamster-name {
+		position: absolute;
+		top: -25px;
+		left: 50%;
+
+		font-family: $fontFamilyBold;
+		font-size: 30px;
+
+		@include text-outline(2px);
+
+		transform: translateX(-50%);
+	}
+}

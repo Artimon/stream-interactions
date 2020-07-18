@@ -13,7 +13,10 @@ $fontFamilyBold: 'Wendy One', sans-serif;
 
 @import "mixins/text-outline";
 
+@import "components/effect-animation";
+@import "components/flying-hamsman";
 @import "components/halloween-bats";
+@import "components/hamster";
 @import "components/hamster-cannon";
 @import "components/hamster-train";
 @import "components/weather";

@@ -12,6 +12,27 @@ let Random = {
 	},
 
 	/**
+	 * Integer from from to to.
+	 *
+	 * @param {number} from
+	 * @param {number} to
+	 * @returns {number}
+	 */
+	range(from, to) {
+		return Math.floor(from + Random.frandom(to - from + 1));
+	},
+
+	/**
+	 * From 0 to given multiplier.
+	 *
+	 * @param {number} multiplier
+	 * @returns {number}
+	 */
+	frandom(multiplier) {
+		return Math.random() * multiplier;
+	},
+
+	/**
 	 * @param {number} value
 	 * @returns {number}
 	 */
@@ -50,25 +71,30 @@ class CoolDown {
 	constructor(delaySeconds, callback) {
 		this._delay = delaySeconds * 1000;
 		this._action = callback;
-		this._repeats = 0;
 		this._promise = null;
+
+		this._userContexts = [];
 	}
 
-	trigger() {
+	/**
+	 * @param {userContext} [userContext]
+	 */
+	trigger(userContext) {
 		if (this._promise) {
-			this._repeats += 1;
+			this._userContexts.push(userContext);
 
 			return;
 		}
 
-		this._action();
+		this._action(userContext);
 
 		this._promise = window.setTimeout(() => {
 			this._promise = null;
 
-			if (this._repeats > 0) {
-				this._repeats -= 1;
-				this.trigger();
+			if (this._userContexts.length > 0) {
+				let userContext = this._userContexts.shift();
+
+				this.trigger(userContext);
 			}
 		}, this._delay);
 	}
