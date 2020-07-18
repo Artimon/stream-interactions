@@ -1,14 +1,6 @@
 class StreamInteraction {
-	constructor(io) {
-		this.io = io;
-
-		this._initialize();
-	}
-
-	_initialize() {
-		this.io.sockets.on('connection', (socket) => {
-			this.socket = socket;
-		});
+	constructor(sendCallback) {
+		this._sendCallback = sendCallback;
 	}
 
 	/**
@@ -16,11 +8,7 @@ class StreamInteraction {
 	 * @param {string} message
 	 */
 	chatMessage(userContext, message) {
-		if (!this.socket) {
-			return;
-		}
-
-		this.socket.emit('streamInteraction:chatMessage', {
+		this._sendCallback.emit('streamInteraction:chatMessage', {
 			userContext: userContext,
 			message: message
 		});
@@ -31,11 +19,7 @@ class StreamInteraction {
 	 * @param {string} rewardId
 	 */
 	redemption(userContext, rewardId) {
-		if (!this.socket) {
-			return;
-		}
-
-		this.socket.emit('streamInteraction:redemption', {
+		this._sendCallback.emit('streamInteraction:redemption', {
 			userContext: userContext,
 			rewardId: rewardId
 		});
@@ -44,7 +28,8 @@ class StreamInteraction {
 
 /*
 class MyMod {
-	constructor(io) {
+	constructor(sendCallback) {
+		this._sendCallback = sendCallback;
 	}
 
 	chatMessage(userContext, message) {
