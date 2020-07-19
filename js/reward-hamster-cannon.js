@@ -19,7 +19,7 @@ let RewardHamsterCannon = (function ($) {
 		 * @private
 		 */
 		_initialize($container, template, userContext) {
-			let speed = 1000 + (Math.random() * Math.random()) * 1000,
+			let speed = 1000 + (Math.random() * Math.random()) * 1000, // Top speed ~2800 for audio.
 				$html = $(template);
 
 			$container.append($html);
@@ -77,7 +77,7 @@ let RewardHamsterCannon = (function ($) {
 		}
 
 		getSpeed() {
-			return Math.sqrt(this.speed.x * this.speed.x + this.speed.y * this.speed.y);
+			return this.getLength(this.speed.x, this.speed.y);
 		}
 
 		getAngle() {
@@ -89,10 +89,19 @@ let RewardHamsterCannon = (function ($) {
 		 * @returns {number}
 		 */
 		getDistance(cannonBall) {
-			return Math.sqrt(
-				(this.right - cannonBall.right) ** 2 +
-				(this.bottom - cannonBall.bottom) ** 2
+			return this.getLength(
+				this.right - cannonBall.right,
+				this.bottom - cannonBall.bottom
 			);
+		}
+
+		/**
+		 * @param {number} a
+		 * @param {number} b
+		 * @returns {number}
+		 */
+		getLength(a, b) {
+			return Math.sqrt(a ** 2 + b ** 2);
 		}
 
 		/**
@@ -141,14 +150,24 @@ let RewardHamsterCannon = (function ($) {
 		}
 
 		/**
+		 * @param {number} distance
+		 */
+		moveBy(distance) {
+			let baseDistance = this.getLength(this.speed.x, this.speed.y),
+				movementFactor = distance / baseDistance;
+
+			this.right += this.speed.x * movementFactor;
+			this.bottom += this.speed.y * movementFactor;
+		}
+
+		/**
 		 * @private
 		 */
 		_collisionDetection() {
 			let leftBoundary = window.innerWidth - this.size,
 				topBoundary = window.innerHeight - this.size,
 				invertedDamping = -0.8,
-				bounced = false,
-				audio;
+				bounced = false;
 
 			if (this.right < 0) {
 				this.right = 0;
@@ -180,11 +199,17 @@ let RewardHamsterCannon = (function ($) {
 				this.speed.y += Random.clasp(this.speed.y * 0.2);
 
 				this._changeRotation();
-
-				audio = new Audio('snd/cartoon-boing.wav');
-				audio.volume = 0.20;
-				audio.play();
+				this._playBoingSound();
 			}
+		}
+
+		_playBoingSound() {
+			let audio = new Audio('snd/cartoon-boing.wav'),
+				speed = this.getSpeed(),
+				volumeFactor = 0.2 + 0.8 * (speed / 1500); // Max. speed is roughly 2800.
+
+			audio.volume = 0.20 * Math.min(1, volumeFactor);
+			audio.play();
 		}
 
 		_changeRotation() {
@@ -239,39 +264,68 @@ let RewardHamsterCannon = (function ($) {
 		_ballCollision() {
 			for (let i = 0; i < this._cannonBalls.length - 1; i++) {
 				for (let j = i + 1; j < this._cannonBalls.length; j++) {
-					let cannonBall1 = this._cannonBalls[i];
-					let cannonBall2 = this._cannonBalls[j];
-
-					if (
-						!cannonBall1.isActive() ||
-						!cannonBall2.isActive()
-					) {
-						continue;
-					}
-
-					let dist = cannonBall1.getDistance(cannonBall2);
-
-					if (dist < cannonBall1.radius + cannonBall2.radius) {
-						let theta1 = cannonBall1.getAngle();
-						let theta2 = cannonBall2.getAngle();
-						let phi = Math.atan2(cannonBall2.bottom - cannonBall1.bottom, cannonBall2.right - cannonBall1.right);
-						let m1 = cannonBall1.mass;
-						let m2 = cannonBall2.mass;
-						let v1 = cannonBall1.getSpeed();
-						let v2 = cannonBall2.getSpeed();
-
-						let dx1F = (v1 * Math.cos(theta1 - phi) * (m1 - m2) + 2 * m2 * v2 * Math.cos(theta2 - phi)) / (m1 + m2) * Math.cos(phi) + v1 * Math.sin(theta1 - phi) * Math.cos(phi + Math.PI / 2);
-						let dy1F = (v1 * Math.cos(theta1 - phi) * (m1 - m2) + 2 * m2 * v2 * Math.cos(theta2 - phi)) / (m1 + m2) * Math.sin(phi) + v1 * Math.sin(theta1 - phi) * Math.sin(phi + Math.PI / 2);
-						let dx2F = (v2 * Math.cos(theta2 - phi) * (m2 - m1) + 2 * m1 * v1 * Math.cos(theta1 - phi)) / (m1 + m2) * Math.cos(phi) + v2 * Math.sin(theta2 - phi) * Math.cos(phi + Math.PI / 2);
-						let dy2F = (v2 * Math.cos(theta2 - phi) * (m2 - m1) + 2 * m1 * v1 * Math.cos(theta1 - phi)) / (m1 + m2) * Math.sin(phi) + v2 * Math.sin(theta2 - phi) * Math.sin(phi + Math.PI / 2);
-
-						cannonBall1.speed.x = dx1F;
-						cannonBall1.speed.y = dy1F;
-						cannonBall2.speed.x = dx2F;
-						cannonBall2.speed.y = dy2F;
-					}
+					this._processBallCollision(
+						this._cannonBalls[i],
+						this._cannonBalls[j]
+					);
 				}
 			}
+		}
+
+		/**
+		 * @param {CannonBall} cannonBall1
+		 * @param {CannonBall} cannonBall2
+		 * @private
+		 */
+		_processBallCollision(cannonBall1, cannonBall2) {
+			if (
+				!cannonBall1.isActive() ||
+				!cannonBall2.isActive()
+			) {
+				return;
+			}
+
+			let dist = cannonBall1.getDistance(cannonBall2);
+			if (dist >= cannonBall1.radius + cannonBall2.radius) {
+				return;
+			}
+
+			let theta1 = cannonBall1.getAngle();
+			let theta2 = cannonBall2.getAngle();
+			let phi = Math.atan2(cannonBall2.bottom - cannonBall1.bottom, cannonBall2.right - cannonBall1.right);
+			let m1 = cannonBall1.mass;
+			let m2 = cannonBall2.mass;
+			let v1 = cannonBall1.getSpeed();
+			let v2 = cannonBall2.getSpeed();
+
+			let dx1F = (v1 * Math.cos(theta1 - phi) * (m1 - m2) + 2 * m2 * v2 * Math.cos(theta2 - phi)) / (m1 + m2) * Math.cos(phi) + v1 * Math.sin(theta1 - phi) * Math.cos(phi + Math.PI / 2);
+			let dy1F = (v1 * Math.cos(theta1 - phi) * (m1 - m2) + 2 * m2 * v2 * Math.cos(theta2 - phi)) / (m1 + m2) * Math.sin(phi) + v1 * Math.sin(theta1 - phi) * Math.sin(phi + Math.PI / 2);
+			let dx2F = (v2 * Math.cos(theta2 - phi) * (m2 - m1) + 2 * m1 * v1 * Math.cos(theta1 - phi)) / (m1 + m2) * Math.cos(phi) + v2 * Math.sin(theta2 - phi) * Math.cos(phi + Math.PI / 2);
+			let dy2F = (v2 * Math.cos(theta2 - phi) * (m2 - m1) + 2 * m1 * v1 * Math.cos(theta1 - phi)) / (m1 + m2) * Math.sin(phi) + v2 * Math.sin(theta2 - phi) * Math.sin(phi + Math.PI / 2);
+
+			cannonBall1.speed.x = dx1F;
+			cannonBall1.speed.y = dy1F;
+			cannonBall2.speed.x = dx2F;
+			cannonBall2.speed.y = dy2F;
+
+			this._collisionMoveApart(cannonBall1, cannonBall2);
+		}
+
+		/**
+		 * @param {CannonBall} cannonBall1
+		 * @param {CannonBall} cannonBall2
+		 * @private
+		 */
+		_collisionMoveApart(cannonBall1, cannonBall2) {
+			let realDistance = cannonBall1.getDistance(cannonBall2),
+				requiredDistance = cannonBall1.radius + cannonBall2.radius,
+				moveDistance = requiredDistance - realDistance;
+
+			if (moveDistance <= 0) {
+				return;
+			}
+
+			cannonBall1.moveBy(moveDistance);
 		}
 
 		_cannonActivate() {
@@ -316,7 +370,7 @@ let RewardHamsterCannon = (function ($) {
 
 		_playCannonChainsSound() {
 			this._audioCannonChains.loop = true;
-			this._audioCannonChains.volume = 0.35;
+			this._audioCannonChains.volume = 0.15;
 			this._audioCannonChains.play();
 
 			window.setTimeout(() => {
