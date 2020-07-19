@@ -40,14 +40,12 @@ let RewardHamsterTrain = (function ($) {
 		 */
 		_createWaggons(userContext) {
 			let activeChatters = ActiveChatters.get(),
-				chatters = activeChatters.getChatters();
+				userContexts = activeChatters.getUserContexts();
 
-			$.each(chatters, (index, chatter) => {
-				if (userContext.userId === chatter.userContext.userId) {
-					return;
-				}
+			activeChatters.removeUserContextFromList(userContexts, userContext);
 
-				this._createWaggon(chatter.userContext);
+			userContexts.forEach((userContext) => {
+				this._createWaggon(userContext);
 			});
 		}
 
