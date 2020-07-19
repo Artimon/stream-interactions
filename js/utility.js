@@ -4,6 +4,23 @@ let Random = {
 	},
 
 	/**
+	 * @param {[]} array
+	 * @returns {[]}
+	 */
+	shuffleArray(array) {
+		let result = [];
+
+		while (array.length > 0) {
+			let item = Random.fromArray(array);
+
+			result.push(item);
+			array.removeItem(item);
+		}
+
+		return result;
+	},
+
+	/**
 	 * @param {number} range
 	 * @returns {number}
 	 */
@@ -175,6 +192,32 @@ class ActiveChatters {
 
 		return this._chatters;
 	}
+
+	/**
+	 * @param {boolean} [defaultIfNone]
+	 * @returns {userContext[]}
+	 */
+	getUserContexts(defaultIfNone) {
+		let chatters = Object.values(
+			this.getChatters(defaultIfNone)
+		);
+
+		return Random.shuffleArray(
+			chatters.map(chatter => chatter.userContext)
+		);
+	}
+
+	/**
+	 * @param {userContext[]} userContexts
+	 * @param {userContext} userContext
+	 */
+	removeUserContextFromList(userContexts, userContext) {
+		userContexts.forEach((checkUserContext) => {
+			if (checkUserContext.userId === userContext.userId) {
+				userContexts.removeItem(checkUserContext);
+			}
+		});
+	}
 }
 
 class LocalStorage {
@@ -274,4 +317,4 @@ Array.prototype.removeItem = function (item) {
 	}
 
 	this.splice(index, 1);
-}
+};

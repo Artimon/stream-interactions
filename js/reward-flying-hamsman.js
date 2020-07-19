@@ -14,6 +14,7 @@ let RewardFlyingHamsman = (function ($) {
 			this._index = index;
 			
 			this._scale = 0.25;
+			this._scaleSpeed = 0;
 			this._rotation = Random.clasp(180);
 			this._rotationSpeed = Random.clasp(700);
 			this._speedX = Random.clasp(100);
@@ -21,6 +22,9 @@ let RewardFlyingHamsman = (function ($) {
 			this._stopDuration = 2;
 
 			this._slideTopSpeed = 60 + Math.random() * 40;
+
+			this._impacted = false;
+			this._impactAudio = new Audio('snd/ship-cannon-splat.wav');
 		}
 
 		/**
@@ -39,13 +43,22 @@ let RewardFlyingHamsman = (function ($) {
 			if (this._stopDuration < 0) {
 				this._slide(deltaTime);
 			}
-			else {
+
+			if (!this._impacted) {
+				this._impacted = true;
 				this._speedY = 0;
+
+				this._playImpactSound();
 			}
 
 			if (this._offset.top > 1500) {
 				return false;
 			}
+		}
+
+		_playImpactSound() {
+			this._impactAudio.volume = 0.05;
+			this._impactAudio.play();
 		}
 
 		/**
@@ -55,11 +68,12 @@ let RewardFlyingHamsman = (function ($) {
 		_fly(deltaTime) {
 			let zIndex;
 
-			this._scale += deltaTime;
+			this._scale += (this._scaleSpeed * this._scaleSpeed) * deltaTime;
 			this._rotation += this._rotationSpeed * deltaTime;
 			this._offset.left += this._speedX * deltaTime;
 			this._offset.top -= this._speedY * deltaTime;
 
+			this._scaleSpeed += 1.4 * deltaTime;
 			this._speedY -= 600 * deltaTime;
 
 			zIndex = (
@@ -140,20 +154,14 @@ let RewardFlyingHamsman = (function ($) {
 		 */
 		_start(userContext) {
 			let activeChatters = ActiveChatters.get(),
-				chatters;
+				userContexts = activeChatters.getUserContexts();
 
-			chatters = Object.values(
-				activeChatters.getChatters()
-			);
-
-			// @TODO Shuffle! Same is always 1st mate.
-			// @TODO Not working, because chatters is not directly user context.
-			chatters.removeItem(userContext);
+			activeChatters.removeUserContextFromList(userContexts, userContext);
 
 			this._$hamsterCaptain.hamster(userContext);
-			this._$hamsterCrew.hamster(chatters.pop().userContext);
+			this._$hamsterCrew.hamster(userContexts.pop());
 
-			this._fireCannonSalves(chatters);
+			this._fireCannonSalves(userContexts);
 			this._resetShip();
 		}
 
@@ -200,7 +208,7 @@ let RewardFlyingHamsman = (function ($) {
 					$gunPort = $(gunPort);
 
 				window.setTimeout(() => {
-					let userContext = userContexts.pop().userContext;
+					let userContext = userContexts.pop();
 
 					if (!userContext) {
 						return;

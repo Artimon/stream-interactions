@@ -8738,9 +8738,15 @@ snowfall snowflake:nth-child(1) {
     animation: animate-flying-hamsman 13s infinite ease-in-out; }
   .component-flying-hamsman .flying-hamsman-image {
     width: 692px; }
+  .component-flying-hamsman .flying-hamsman-flag-image {
+    position: absolute;
+    top: -6px;
+    left: 198px;
+    width: 40px; }
   .component-flying-hamsman .magic-cloud-image {
     position: absolute;
     width: 300px;
+    opacity: .9;
     animation-name: animate-magic-cloud;
     animation-fill-mode: forwards;
     animation-iteration-count: infinite; }

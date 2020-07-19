@@ -28,9 +28,19 @@
 		width: 692px;
 	}
 
+	.flying-hamsman-flag-image {
+		position: absolute;
+		top: -6px;
+		left: 198px;
+
+		width: 40px;
+	}
+
 	.magic-cloud-image {
 		position: absolute;
 		width: 300px;
+
+		opacity: .9;
 
 		animation-name: animate-magic-cloud;
 		animation-fill-mode: forwards;

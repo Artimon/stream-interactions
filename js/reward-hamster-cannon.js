@@ -207,6 +207,7 @@ let RewardHamsterCannon = (function ($) {
 			this._cannonBallTemplate = this._$component.find('.template-cannon-ball').html();
 
 			this._audioCannon = new Audio('snd/cannon-crackle.wav');
+			this._audioCannonChains = new Audio('snd/cannon-chains.wav');
 
 			/**
 			 * @type {CannonBall[]}
@@ -275,6 +276,7 @@ let RewardHamsterCannon = (function ($) {
 
 		_cannonActivate() {
 			this._$cannonContainer.addClass('show');
+			this._playCannonChainsSound();
 
 			window.setTimeout(() => {
 				let self = this,
@@ -297,6 +299,7 @@ let RewardHamsterCannon = (function ($) {
 					if (cannonBallUserContexts.length === 0) {
 						window.setTimeout(() => {
 							self._$cannonContainer.removeClass('show');
+							self._playCannonChainsSound();
 						}, 2000);
 
 						return;
@@ -309,6 +312,20 @@ let RewardHamsterCannon = (function ($) {
 
 				nextCannonBall();
 			}, 2000);
+		}
+
+		_playCannonChainsSound() {
+			this._audioCannonChains.loop = true;
+			this._audioCannonChains.volume = 0.35;
+			this._audioCannonChains.play();
+
+			window.setTimeout(() => {
+				this._audioCannonChains.animate({ volume: 0 }, 200);
+			}, 800);
+
+			window.setTimeout(() => {
+				this._audioCannonChains.pause();
+			}, 1000);
 		}
 
 		/**

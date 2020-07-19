@@ -1,4 +1,7 @@
 class StreamInteraction {
+	/**
+	 * @param {function} sendCallback
+	 */
 	constructor(sendCallback) {
 		this._sendCallback = sendCallback;
 	}
@@ -8,7 +11,7 @@ class StreamInteraction {
 	 * @param {string} message
 	 */
 	chatMessage(userContext, message) {
-		this._sendCallback.emit('streamInteraction:chatMessage', {
+		this._sendCallback('streamInteraction:chatMessage', {
 			userContext: userContext,
 			message: message
 		});
@@ -19,7 +22,7 @@ class StreamInteraction {
 	 * @param {string} rewardId
 	 */
 	redemption(userContext, rewardId) {
-		this._sendCallback.emit('streamInteraction:redemption', {
+		this._sendCallback('streamInteraction:redemption', {
 			userContext: userContext,
 			rewardId: rewardId
 		});

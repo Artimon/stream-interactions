@@ -73,6 +73,17 @@ class StreamInteractionProcessor {
 	registerReward(rewardId, reward) {
 		this.rewards[rewardId] = reward;
 	}
+
+	/**
+	 * @param {string} selector
+	 * @param reward
+	 */
+	registerRewardFromMeta(selector, reward) {
+		let $meta = $(selector),
+			rewardId = $meta.attr('content');
+
+		this.registerReward(rewardId, reward);
+	}
 }
 
 $(function () {
@@ -80,11 +91,11 @@ $(function () {
 
 	AnimationEngine.get().start();
 
-	processor.registerReward('f19f7e5f-f760-4a1b-84b6-3517761a88ad', new RewardRaptorize());
-	processor.registerReward('086b49ae-a6b9-4d70-b710-fce8a8bd4154', new RewardWeather());
+	// processor.registerReward('f19f7e5f-f760-4a1b-84b6-3517761a88ad', new RewardRaptorize());
+	// processor.registerReward('086b49ae-a6b9-4d70-b710-fce8a8bd4154', new RewardWeather());
 	//processor.registerReward('06aa7f74-82d6-40b8-8b8a-888b22daf781', new RewardSnowfall());
-	processor.registerReward('f73d1843-ebc7-4ad0-ace2-c3b3c487b6fa', new RewardHamsterTrain());
-	processor.registerReward('c547b2ec-062f-41e0-a3fa-c0c96ba6b69b', new RewardHamsterCannon());
-	processor.registerReward('3fe81181-35b1-4c55-9ee1-0b96755069fb', new RewardFlyingHamsman());
+	processor.registerRewardFromMeta('.chat-train', new RewardHamsterTrain());
+	processor.registerRewardFromMeta('.chat-cannon', new RewardHamsterCannon());
+	processor.registerRewardFromMeta('.chat-flying-ship', new RewardFlyingHamsman());
 
 });
