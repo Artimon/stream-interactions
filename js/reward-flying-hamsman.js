@@ -117,8 +117,9 @@ let RewardFlyingHamsman = (function ($) {
 			this._$hamsterCrew = this._$component.find('.hamster-crew');
 
 			this._cannonBallTemplate = this._$component.find('.template-hamster-cannon-ball').html();
-
 			this._cannonBallsAnimation = [];
+
+			this._windAudio = new Audio('snd/ship-wind.wav');
 
 			this._initialize();
 
@@ -163,6 +164,23 @@ let RewardFlyingHamsman = (function ($) {
 
 			this._fireCannonSalves(userContexts);
 			this._resetShip();
+			this._windSound();
+		}
+
+		/**
+		 * @private
+		 */
+		_windSound() {
+			let $audio = $(this._windAudio);
+
+			this._windAudio.volume = 0;
+			this._windAudio.play();
+
+			$audio.animate({ volume: 0.35 }, 1000);
+
+			window.setTimeout(() => {
+				$audio.animate({ volume: 0 }, 1000);
+			}, 32000);
 		}
 
 		_resetShip() {

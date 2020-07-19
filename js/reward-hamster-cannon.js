@@ -369,12 +369,14 @@ let RewardHamsterCannon = (function ($) {
 		}
 
 		_playCannonChainsSound() {
+			let $audio = $(this._audioCannonChains);
+
 			this._audioCannonChains.loop = true;
 			this._audioCannonChains.volume = 0.15;
 			this._audioCannonChains.play();
 
 			window.setTimeout(() => {
-				this._audioCannonChains.animate({ volume: 0 }, 200);
+				$audio.animate({ volume: 0 }, 200);
 			}, 800);
 
 			window.setTimeout(() => {
