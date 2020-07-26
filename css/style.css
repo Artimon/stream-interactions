@@ -8940,14 +8940,14 @@ body.show-halloween-bats .halloween-bat {
     position: relative;
     margin-left: -14px; }
     .component-hamster-train .hamster-train-locomotive .wheel-image {
-      width: 518px; }
+      width: 496px; }
     .component-hamster-train .hamster-train-locomotive .waggon-passenger {
       bottom: 94px;
-      left: 296px; }
+      left: 274px; }
   .component-hamster-train .locomotive-image {
-    width: 594px;
-    margin-bottom: 4px;
-    margin-left: 2px; }
+    width: 588px;
+    margin-bottom: 12px;
+    margin-left: -14px; }
   .component-hamster-train .waggon-image {
     display: none;
     width: 248px;

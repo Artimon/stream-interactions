@@ -91,8 +91,8 @@ $(function () {
 
 	AnimationEngine.get().start();
 
-	// processor.registerReward('f19f7e5f-f760-4a1b-84b6-3517761a88ad', new RewardRaptorize());
-	// processor.registerReward('086b49ae-a6b9-4d70-b710-fce8a8bd4154', new RewardWeather());
+	processor.registerReward('f19f7e5f-f760-4a1b-84b6-3517761a88ad', new RewardRaptorize());
+	processor.registerReward('086b49ae-a6b9-4d70-b710-fce8a8bd4154', new RewardWeather());
 	//processor.registerReward('06aa7f74-82d6-40b8-8b8a-888b22daf781', new RewardSnowfall());
 	processor.registerRewardFromMeta('.chat-train', new RewardHamsterTrain());
 	processor.registerRewardFromMeta('.chat-cannon', new RewardHamsterCannon());

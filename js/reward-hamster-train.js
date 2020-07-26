@@ -178,8 +178,8 @@ let RewardHamsterTrain = (function ($) {
 				let offset = this._$locomotive.offset(),
 					$html;
 
-				offset.left += 80;
-				offset.top += 10;
+				offset.left += 75;
+				offset.top += 5;
 
 				if (
 					offset.left <= 0 ||
@@ -225,12 +225,12 @@ let RewardHamsterTrain = (function ($) {
 		 */
 		_move() {
 			let viewportWidth = $(window).width(),
-				trainWidth = this.$hamsterTrain.width(),
+				trainWidth = this.$hamsterTrain.width() + 100,
 				distance = viewportWidth + trainWidth,
 				duration = distance * 4;
 
 			this.$hamsterTrain.css({
-				left: (viewportWidth + 20) + 'px',
+				left: (viewportWidth + 50) + 'px',
 				transition: 'none'
 			});
 
