@@ -97,5 +97,6 @@ $(function () {
 	processor.registerRewardFromMeta('.chat-train', new RewardHamsterTrain());
 	processor.registerRewardFromMeta('.chat-cannon', new RewardHamsterCannon());
 	processor.registerRewardFromMeta('.chat-flying-ship', new RewardFlyingHamsman());
+	processor.registerRewardFromMeta('.chat-rockets', new RewardHamsterRockets());
 
 });

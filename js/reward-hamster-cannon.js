@@ -89,10 +89,23 @@ let RewardHamsterCannon = (function ($) {
 		 * @returns {number}
 		 */
 		getDistance(cannonBall) {
+			let distanceVector = this.getDistanceVector(cannonBall);
+
 			return this.getLength(
-				this.right - cannonBall.right,
-				this.bottom - cannonBall.bottom
+				distanceVector.right,
+				distanceVector.bottom
 			);
+		}
+
+		/**
+		 * @param {CannonBall} cannonBall
+		 * @returns {{bottom: number, right: number}}
+		 */
+		getDistanceVector(cannonBall) {
+			return {
+				right: this.right - cannonBall.right,
+				bottom: this.bottom - cannonBall.bottom
+			};
 		}
 
 		/**
@@ -151,13 +164,13 @@ let RewardHamsterCannon = (function ($) {
 
 		/**
 		 * @param {number} distance
+		 * @param {{bottom: number, right: number}} direction
 		 */
-		moveBy(distance) {
-			let baseDistance = this.getLength(this.speed.x, this.speed.y),
-				movementFactor = distance / baseDistance;
+		moveBy(distance, direction) {
+			let baseDistance = this.getLength(direction.right, direction.bottom);
 
-			this.right += this.speed.x * movementFactor;
-			this.bottom += this.speed.y * movementFactor;
+			this.right += direction.right / baseDistance * distance;
+			this.bottom += direction.bottom / baseDistance * distance;
 		}
 
 		/**
@@ -319,13 +332,16 @@ let RewardHamsterCannon = (function ($) {
 		_collisionMoveApart(cannonBall1, cannonBall2) {
 			let realDistance = cannonBall1.getDistance(cannonBall2),
 				requiredDistance = cannonBall1.radius + cannonBall2.radius,
-				moveDistance = requiredDistance - realDistance;
+				moveDistance = requiredDistance - realDistance,
+				direction;
 
 			if (moveDistance <= 0) {
 				return;
 			}
 
-			cannonBall1.moveBy(moveDistance);
+			direction = cannonBall1.getDistanceVector(cannonBall2);
+
+			cannonBall1.moveBy(moveDistance, direction);
 		}
 
 		_cannonActivate() {

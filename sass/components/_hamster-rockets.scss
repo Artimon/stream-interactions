@@ -1,0 +1,38 @@
+.component-hamster-rockets {
+	.hamster-rocket {
+		position: fixed;
+		left: 500px;
+		bottom: -500px;
+
+		animation: animate-hamster-rocket 3s ease-in-out;
+	}
+
+	.hamster-rocket-image-container {
+		image-rendering: pixelated;
+	}
+
+	.rocket-image {
+		width: 260px;
+	}
+
+	.component-hamster {
+		top: -30px;
+		left: 74px;
+		z-index: -1;
+	}
+}
+
+@keyframes animate-hamster-rocket {
+	0% {
+		bottom: -500px;
+	}
+	35% {
+		bottom: 25%;
+	}
+	70% {
+		bottom: 15%;
+	}
+	100% {
+		bottom: 200%;
+	}
+}
