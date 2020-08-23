@@ -8902,6 +8902,59 @@ body.show-halloween-bats .halloween-bat {
     .component-hamster-cannon .smoke-image.show {
       display: block; }
 
+.component-hamster-rockets .hamster-rocket-seat-image-container {
+  position: absolute;
+  top: 20px;
+  left: 84px;
+  z-index: -1;
+  image-rendering: pixelated; }
+
+.component-hamster-rockets .seat-image {
+  width: 92px; }
+
+.component-hamster-rockets .hamster-rocket {
+  position: fixed;
+  bottom: -500px;
+  transform: translateX(-50%);
+  animation: animate-hamster-rocket 3s ease-in-out; }
+  .component-hamster-rockets .hamster-rocket.saturn-v .saturn-v {
+    display: block; }
+  .component-hamster-rockets .hamster-rocket.hamster-9 .hamster-9 {
+    display: block; }
+  .component-hamster-rockets .hamster-rocket .saturn-v {
+    display: none; }
+  .component-hamster-rockets .hamster-rocket .hamster-9 {
+    display: none; }
+
+.component-hamster-rockets .hamster-rocket-image-container {
+  image-rendering: pixelated; }
+
+.component-hamster-rockets .rocket-image {
+  width: 260px; }
+
+.component-hamster-rockets .hamster-rocket-exhaust-image-container {
+  position: absolute;
+  left: 38px;
+  image-rendering: pixelated; }
+
+.component-hamster-rockets .exhaust-image {
+  width: 184px; }
+
+.component-hamster-rockets .component-hamster {
+  top: -30px;
+  left: 74px;
+  z-index: -1; }
+
+@keyframes animate-hamster-rocket {
+  0% {
+    bottom: -500px; }
+  35% {
+    bottom: 25%; }
+  70% {
+    bottom: 15%; }
+  100% {
+    bottom: 200%; } }
+
 .component-hamster-train {
   position: fixed;
   right: 0;

@@ -151,6 +151,7 @@ let RewardHamsterTrain = (function ($) {
 			/**
 			 * @param {number} step
 			 * @param $html
+			 * @param $smokeImages
 			 */
 			function process(step, $html, $smokeImages) {
 				if (step === 0) {
