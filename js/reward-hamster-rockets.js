@@ -59,7 +59,7 @@ let RewardHamsterRockets = (function ($) {
 
 		_start() {
 			let activeChatters = ActiveChatters.get(),
-				userContexts = activeChatters.getUserContexts(),
+				userContexts = activeChatters.getUserContexts(true),
 				amount = 1;
 
 			if (Math.random() > .66) {
